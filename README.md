@@ -27,11 +27,41 @@ const UsersList = () => {
 	}, [])
 
   return (
-    <div>
+    <ul>
       {users.map(user => (
-        <User user={user} key={user.id} />
+        <li key={user.id}>{user.name}</li>
       ))}
-    </div>
+    </ul>
   )
+}
+```
+
+Later, you write a component for subscribing to a single blog post, which follows a similar pattern:
+
+```js
+const BlogPost = ({ postId }) => {
+
+	const [post, setPost] = useState(null)
+
+	const onChange = useCallback(() => {
+    console.log('Fetching post...')
+    DS.getPost(postId).then(data => {
+      console.log('Got post! Updating state...')
+      setPost(data)
+    })
+  })
+
+	useEffect(() => {
+    onChange()
+		DS.addChangeListener(onChange)
+		return () => DS.removeChangeListener(onChange)
+	}, [])
+
+	return (
+		<div className='BlogPost'>
+			<h6>{post?.title}</h6>
+			<pre>{post?.body}</pre>
+		</div>
+	)
 }
 ```
