@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
 import DS from '../ds'
-import User from './User'
 
 const UsersList = () => {
 
@@ -21,11 +20,11 @@ const UsersList = () => {
 	}, [])
 
   return (
-    <div>
+    <ul>
       {users.map(user => (
-        <User user={user} key={user.id} />
+        <li key={user.id}>{user.name}</li>
       ))}
-    </div>
+    </ul>
   )
 }
 
