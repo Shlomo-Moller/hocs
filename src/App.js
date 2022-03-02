@@ -1,7 +1,11 @@
+import UsersList from './components/UsersList'
+
 const App = () => {
   return (
     <div className='App'>
-      React HOCs
+      <h1>React HOCs</h1>
+      <button id='change-simulator'>Simulate DS change</button>
+      <UsersList />
     </div>
   )
 }
