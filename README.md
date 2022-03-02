@@ -12,13 +12,7 @@ const UsersList = () => {
 
 	const [users, setUsers] = useState([])
 
-  const onChange = useCallback(() => {
-    console.log('Fetching users...')
-    DS.getUsers().then(data => {
-      console.log('Got users! Updating state...')
-      setUsers(data)
-    })
-  })
+  const onChange = useCallback(() => DS.getUsers().then(data => setUsers(data)))
 
 	useEffect(() => {
     onChange()
@@ -43,13 +37,7 @@ const BlogPost = ({ postId }) => {
 
 	const [post, setPost] = useState(null)
 
-	const onChange = useCallback(() => {
-    console.log('Fetching post...')
-    DS.getPost(postId).then(data => {
-      console.log('Got post! Updating state...')
-      setPost(data)
-    })
-  })
+	const onChange = useCallback(() => DS.getPost(postId).then(data => setPost(data)))
 
 	useEffect(() => {
     onChange()
@@ -65,3 +53,15 @@ const BlogPost = ({ postId }) => {
 	)
 }
 ```
+
+You can imagine that in a large app, this same pattern of subscribing to `DS` and calling `setState` will occur over and over again.
+
+Let's use a HOC to abstract this logic and share it across many components.
+
+It'll... :
+
+* Accept as one of its arguments a child component, like `UsersList` and `BlogPost`.
+* Create a new component that... :
+    * Wrapps the given component.
+    * Subscribes to `DS`
+    * Passes subscribed data as a prop to the given component.
