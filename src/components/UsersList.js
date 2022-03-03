@@ -23,7 +23,7 @@ const UsersList = () => {
 	}, [])
 
   return (
-    <ul>
+    <ul className='UsersList'>
       {users.map(user => (
         <li key={user.id}>{user.name}</li>
       ))}
