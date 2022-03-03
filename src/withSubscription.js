@@ -2,9 +2,8 @@ import { useState, useEffect, useCallback } from 'react'
 import DS from './ds'
 
 /**
- * @param {(props) => JSX.Element} Component 
- * @param {(dataSource, props) => Promise} fetcher 
- * @returns {JSX.Element}
+ * @param {(props: { data }) => JSX.Element} Component 
+ * @param {(dataSource, props) => Promise<json>} fetcher 
  */
 const withSubscription = (Component, fetcher) => props => {
 
