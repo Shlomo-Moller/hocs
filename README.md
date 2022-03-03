@@ -34,7 +34,9 @@ const SubscribingUsersList = () => {
     </ul>
   )
 }
+```
 
+```js
 const SubscribingBlogPost = ({ postId }) => {
 
   const [post, setPost] = useState(null)
@@ -52,9 +54,11 @@ const SubscribingBlogPost = ({ postId }) => {
 }
 ```
 
-So, let's use a HOC to abstract this logic and share it across many components, like simpler versions of the above.
+...
 
-It'll... :
+So, let's use a HOC to abstract this fetch and subscription logic and share it across many components, like simpler versions of the above.
+
+Our HOC will... :
 
 * Accept as one of its arguments a child component.
 * Create a new component that... :
