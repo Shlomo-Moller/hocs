@@ -1,7 +1,7 @@
 import SubscribingUsersList from './components/SubscribingUsersList'
 import SubscribingBlogPost from './components/SubscribingBlogPost'
-import SimpleUsersList from './components/SimpleUsersList'
-import SimpleBlogPost from './components/SimpleBlogPost'
+import UsersList from './components/UsersList'
+import BlogPost from './components/BlogPost'
 
 const POST_ID = 1
 
@@ -9,15 +9,26 @@ const App = () => {
   return (
     <div className='App'>
       <h1>React HOCs</h1>
+
+      <h2>Data Source "Change" Simulation</h2>
+
       <button id='change-simulator'>Simulate DS change</button>
-      <h2>SubscribingUsersList</h2>
+      <br />
+      This button serves as a raiser of an event that represents a "change" on the data source.
+
+      <h2>The Different Versions of Our Components</h2>
+      
+      <h3>Subscribing components version</h3>
+      <h4><code>SubscribingUsersList</code></h4>
       <SubscribingUsersList />
-      <h2>SubscribingBlogPost #{POST_ID}</h2>
+      <h4><code>SubscribingBlogPost</code> #{POST_ID}</h4>
       <SubscribingBlogPost postId={POST_ID} />
-      <h2>SimpleUsersList</h2>
-      <SimpleUsersList />
-      <h2>SimpleBlogPost</h2>
-      <SimpleBlogPost />
+
+      <h3>Wrapped by HOC Version</h3>
+      <h4><code>UsersList</code></h4>
+      <UsersList />
+      <h4><code>BlogPost</code> #{POST_ID}</h4>
+      <BlogPost postId={POST_ID} />
     </div>
   )
 }
