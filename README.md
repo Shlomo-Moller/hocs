@@ -1,7 +1,5 @@
 # React [HOC](https://reactjs.org/docs/higher-order-components.html "Higher-Order Component")s - Hooks Version
 
-## Intro
-
 React HOCs explained in the functional components way.
 
 ## Let's Go
@@ -11,7 +9,9 @@ A React HOC is a... :
 * Pattern.
 * Function that takes a component and returns a new component.
 
-Say you have a `SubscribingUsersList` component that subscribes to an external data source to render a list of users:
+### Scenario-Based Explanation
+
+Say you have many different components that use the same pattern to subscribe to an external data source to render the fetched data, e.g.:
 
 ```js
 const SubscribingUsersList = () => {
@@ -34,11 +34,7 @@ const SubscribingUsersList = () => {
     </ul>
   )
 }
-```
 
-Later, you write a component for subscribing to a single blog post, which follows a similar pattern:
-
-```js
 const SubscribingBlogPost = ({ postId }) => {
 
   const [post, setPost] = useState(null)
@@ -56,9 +52,7 @@ const SubscribingBlogPost = ({ postId }) => {
 }
 ```
 
-You can imagine that in a large app, this same pattern of subscribing to `DS` and calling `setState` will occur over and over again.
-
-Let's use a HOC to abstract this logic and share it across many components, like simpler versions of the above components.
+So, let's use a HOC to abstract this logic and share it across many components, like simpler versions of the above.
 
 It'll... :
 
@@ -81,7 +75,8 @@ const withSubscription = (Component, fetcher) => props => {
 }
 ```
 
-Now let's make new simple versions of our components, that **don't** manage any subscriptions, and only provide UI:
+Now let's make new simple versions of our components, that **don't** manage any subscriptions, and only provide UI.
+We'll expose the new subscribing version of them using `withSubscription`:
 
 **Inside `UsersList.js`:**
 ```js
