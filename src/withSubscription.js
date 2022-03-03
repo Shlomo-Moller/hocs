@@ -4,8 +4,9 @@ import DS from './ds'
 /**
  * @param {(props: { data }) => JSX.Element} Component 
  * @param {(dataSource, props) => Promise<json>} fetcher 
+ * @param {string} passedPropName
  */
-const withSubscription = (Component, fetcher) => props => {
+const withSubscription = (Component, fetcher, passedPropName = 'data') => props => {
 
 	const [data, setData] = useState(null)
 
@@ -23,7 +24,7 @@ const withSubscription = (Component, fetcher) => props => {
 		return () => DS.removeChangeListener(onChange)
 	}, [])
 
-	return <Component data={data} {...props} />
+	return <Component {...{ [passedPropName]: data }} {...props} />
 }
 
 export default withSubscription
