@@ -1,4 +1,10 @@
-# React [HOCs](https://reactjs.org/docs/higher-order-components.html "Higher-Order Components")
+# React [HOC](https://reactjs.org/docs/higher-order-components.html "Higher-Order Component")s - Hooks Version
+
+## Intro
+
+React HOCs explained in the functional components way.
+
+## Let's Go
 
 A React HOC is a... :
 
