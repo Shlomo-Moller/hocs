@@ -1,6 +1,7 @@
 import UsersList from './components/UsersList'
 import BlogPost from './components/BlogPost'
 import SimpleUsersList from './components/SimpleUsersList'
+import SimpleBlogPost from './components/SimpleBlogPost'
 
 const POST_ID = 1
 
@@ -15,6 +16,8 @@ const App = () => {
       <BlogPost postId={POST_ID} />
       <h2>SimpleUsersList</h2>
       <SimpleUsersList />
+      <h2>SimpleBlogPost</h2>
+      <SimpleBlogPost />
     </div>
   )
 }
