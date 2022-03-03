@@ -10,15 +10,15 @@ Say you have a `UsersList` component that subscribes to an external data source 
 ```js
 const UsersList = () => {
 
-	const [users, setUsers] = useState([])
+  const [users, setUsers] = useState([])
 
   const onChange = useCallback(() => DS.getUsers().then(data => setUsers(data)))
 
-	useEffect(() => {
+  useEffect(() => {
     onChange()
-		DS.addChangeListener(onChange)
-		return () => DS.removeChangeListener(onChange)
-	}, [])
+    DS.addChangeListener(onChange)
+    return () => DS.removeChangeListener(onChange)
+  }, [])
 
   return (
     <ul>
@@ -35,22 +35,22 @@ Later, you write a component for subscribing to a single blog post, which follow
 ```js
 const BlogPost = ({ postId }) => {
 
-	const [post, setPost] = useState(null)
+  const [post, setPost] = useState(null)
 
-	const onChange = useCallback(() => DS.getPost(postId).then(data => setPost(data)))
+  const onChange = useCallback(() => DS.getPost(postId).then(data => setPost(data)))
 
-	useEffect(() => {
+  useEffect(() => {
     onChange()
-		DS.addChangeListener(onChange)
-		return () => DS.removeChangeListener(onChange)
-	}, [])
+    DS.addChangeListener(onChange)
+    return () => DS.removeChangeListener(onChange)
+  }, [])
 
-	return (
-		<div className='BlogPost'>
-			<h6>{post?.title}</h6>
-			<pre>{post?.body}</pre>
-		</div>
-	)
+  return (
+    <div className='BlogPost'>
+      <h6>{post?.title}</h6>
+      <pre>{post?.body}</pre>
+    </div>
+  )
 }
 ```
 
