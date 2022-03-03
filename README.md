@@ -4,10 +4,11 @@ React HOCs explained in the functional components way.
 
 ## Let's Go
 
-A React HOC is a... :
-
-* Pattern.
-* Function that takes a component and returns a new component.
+* React HOCs are a pattern to abstract and share some logic accross many components.
+* A React HOC is a pure function that... :
+    * Defines some functionality.
+    * Takes a component.
+    * Returns a new component based on the given one, but with the additional functionality.
 
 ### Scenario-Based Explanation
 
