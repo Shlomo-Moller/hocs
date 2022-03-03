@@ -52,35 +52,60 @@ const SubscribingBlogPost = ({ postId }) => {
 
 You can imagine that in a large app, this same pattern of subscribing to `DS` and calling `setState` will occur over and over again.
 
-Let's use a HOC to abstract this logic and share it across many components.
+Let's use a HOC to abstract this logic and share it across many components, like simpler versions of the above components.
 
-But first, let's prepare new simple versions of `UsersList` and `BlogPost`, that **don't** manage any subscriptions, and only provide UI:
+It'll... :
+
+* Accept as one of its arguments a child component.
+* Create a new component that... :
+    * Wrapps the given component.
+    * Subscribes to `DS`.
+    * Passes subscribed data as a prop to the given component.
 
 ```js
-const SimpleUsersList = ({ users }) => {
+const withSubscription = (Component, fetcher) => props => {
+
+	const [data, setData] = useState(null)
+
+	const onChange = useCallback(() => fetcher(DS, props).then(json => setData(json))
+
+	useEffect(/* Same effect... */)
+
+	return <Component data={data} {...props} />
+}
+```
+
+Now let's make new simple versions of our components, that **don't** manage any subscriptions, and only provide UI:
+
+**Inside `UsersList.js`:**
+```js
+const UsersList = ({ data }) => {
   return (
-    <ul>
-      {users?.map(user => (
+    <ul className='UsersList'>
+      {data?.map(user => (
         <li key={user.id}>{user.name}</li>
       ))}
     </ul>
   )
 }
 
-const SimpleBlogPost = ({ post }) => {
-  return (
-    <div>
-      <h6>{post?.title}</h6>
-      <pre>{post?.body}</pre>
-    </div>
-  )
-}
+const usersFetcher = DS => DS.getUsers()
+
+export default withSubscription(UsersList, usersFetcher)
 ```
 
-Now, back to our HOC. It'll... :
+**Inside `BlogPost.js`:**
+```js
+const BlogPost = ({ data }) => {
+	return (
+		<div className='BlogPost'>
+			<h6>{data?.title}</h6>
+			<pre>{data?.body}</pre>
+		</div>
+	)
+}
 
-* Accept as one of its arguments a child component, like `SimpleUsersList` and `SimpleBlogPost`.
-* Create a new component that... :
-    * Wrapps the given component.
-    * Subscribes to `DS`.
-    * Passes subscribed data as a prop to the given component.
+const postFetcher = (DS, { postId }) => DS.getPost(postId)
+
+export default withSubscription(BlogPost, postFetcher)
+```
