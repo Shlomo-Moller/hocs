@@ -115,3 +115,49 @@ const postFetcher = (DS, { postId }) => DS.getPost(postId)
 
 export default withSubscription(BlogPost, postFetcher)
 ```
+
+Nice!
+
+### Improve it
+
+To control the name of the passed prop, we could do as follows:
+
+**In `withSubscription`:**
+```js
+const withSubscription = (Component, fetcher, passedPropName = 'data') => props => {
+	...
+	return <Component {...{ [passedPropName]: data }} {...props} />
+}
+```
+
+(Note the new `passedPropName` argument and the new way we pass `data` using `passedPropName`)
+
+**In `UsersList.js`:**
+```js
+const UsersList = ({ users }) => {
+  return (
+    <ul>
+      {users?.map(user => (
+        ...
+      ))}
+    </ul>
+  )
+}
+
+...
+
+export default withSubscription(UsersList, usersFetcher, 'users')
+```
+
+(Note the `users` prop in place of `data` and the new `'users'` parameter)
+
+**In `BlogPost.js`:**
+```js
+const BlogPost = ({ post }) => {
+	...
+}
+
+export default withSubscription(BlogPost, postFetcher, 'post')
+```
+
+(Same story - `post` instead of `data` and an additional `'post'` parameter)
