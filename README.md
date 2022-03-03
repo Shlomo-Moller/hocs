@@ -58,15 +58,7 @@ You can imagine that in a large app, this same pattern of subscribing to `DS` an
 
 Let's use a HOC to abstract this logic and share it across many components.
 
-It'll... :
-
-* Accept as one of its arguments a child component, like `UsersList` and `BlogPost`.
-* Create a new component that... :
-    * Wrapps the given component.
-    * Subscribes to `DS`
-    * Passes subscribed data as a prop to the given component.
-
-But first, let's prepare new simple versions of `UsersList` and `BlogPost`, that don't manage any subscriptions, and nly provide UI:
+But first, let's prepare new simple versions of `UsersList` and `BlogPost`, that **don't** manage any subscriptions, and only provide UI:
 
 ```js
 const SimpleUsersList = ({ users }) => {
@@ -80,11 +72,19 @@ const SimpleUsersList = ({ users }) => {
 }
 
 const SimpleBlogPost = ({ post }) => {
-	return (
-		<div className='SimpleBlogPost'>
-			<h6>{post?.title}</h6>
-			<pre>{post?.body}</pre>
-		</div>
-	)
+  return (
+    <div className='SimpleBlogPost'>
+      <h6>{post?.title}</h6>
+      <pre>{post?.body}</pre>
+    </div>
+  )
 }
 ```
+
+Now, back to our HOC. It'll... :
+
+* Accept as one of its arguments a child component, like `SimpleUsersList` and `SimpleBlogPost`.
+* Create a new component that... :
+    * Wrapps the given component.
+    * Subscribes to `DS`.
+    * Passes subscribed data as a prop to the given component.
