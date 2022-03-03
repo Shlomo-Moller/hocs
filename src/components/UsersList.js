@@ -1,6 +1,9 @@
 import { useState, useEffect, useCallback } from 'react'
 import DS from '../ds'
 
+/**
+ * Independently subscribes to the data source
+ */
 const UsersList = () => {
 
 	const [users, setUsers] = useState([])
