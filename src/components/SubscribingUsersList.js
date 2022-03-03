@@ -6,7 +6,7 @@ import DS from '../ds'
  */
 const SubscribingUsersList = () => {
 
-	const [users, setUsers] = useState([])
+  const [users, setUsers] = useState([])
 
   const onChange = useCallback(() => {
     console.log('Fetching users...')
@@ -16,11 +16,11 @@ const SubscribingUsersList = () => {
     })
   })
 
-	useEffect(() => {
+  useEffect(() => {
     onChange()
-		DS.addChangeListener(onChange)
-		return () => DS.removeChangeListener(onChange)
-	}, [])
+    DS.addChangeListener(onChange)
+    return () => DS.removeChangeListener(onChange)
+  }, [])
 
   return (
     <ul className='SubscribingUsersList'>
