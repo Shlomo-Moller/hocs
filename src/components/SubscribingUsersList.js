@@ -4,7 +4,7 @@ import DS from '../ds'
 /**
  * Independently subscribes to the data source
  */
-const UsersList = () => {
+const SubscribingUsersList = () => {
 
 	const [users, setUsers] = useState([])
 
@@ -23,7 +23,7 @@ const UsersList = () => {
 	}, [])
 
   return (
-    <ul className='UsersList'>
+    <ul className='SubscribingUsersList'>
       {users.map(user => (
         <li key={user.id}>{user.name}</li>
       ))}
@@ -31,4 +31,4 @@ const UsersList = () => {
   )
 }
 
-export default UsersList
+export default SubscribingUsersList

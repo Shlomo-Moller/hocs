@@ -5,10 +5,10 @@ A React HOC is a... :
 * Pattern.
 * Function that takes a component and returns a new component.
 
-Say you have a `UsersList` component that subscribes to an external data source to render a list of users:
+Say you have a `SubscribingUsersList` component that subscribes to an external data source to render a list of users:
 
 ```js
-const UsersList = () => {
+const SubscribingUsersList = () => {
 
   const [users, setUsers] = useState([])
 
@@ -21,7 +21,7 @@ const UsersList = () => {
   }, [])
 
   return (
-    <ul>
+    <ul className='SubscribingUsersList'>
       {users.map(user => (
         <li key={user.id}>{user.name}</li>
       ))}
@@ -33,7 +33,7 @@ const UsersList = () => {
 Later, you write a component for subscribing to a single blog post, which follows a similar pattern:
 
 ```js
-const BlogPost = ({ postId }) => {
+const SubscribingBlogPost = ({ postId }) => {
 
   const [post, setPost] = useState(null)
 
@@ -46,7 +46,7 @@ const BlogPost = ({ postId }) => {
   }, [])
 
   return (
-    <div className='BlogPost'>
+    <div className='SubscribingBlogPost'>
       <h6>{post?.title}</h6>
       <pre>{post?.body}</pre>
     </div>
