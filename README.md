@@ -65,3 +65,26 @@ It'll... :
     * Wrapps the given component.
     * Subscribes to `DS`
     * Passes subscribed data as a prop to the given component.
+
+But first, let's prepare new simple versions of `UsersList` and `BlogPost`, that don't manage any subscriptions, and nly provide UI:
+
+```js
+const SimpleUsersList = ({ users }) => {
+  return (
+    <ul className='SimpleUsersList'>
+      {users?.map(user => (
+        <li key={user.id}>{user.name}</li>
+      ))}
+    </ul>
+  )
+}
+
+const SimpleBlogPost = ({ post }) => {
+	return (
+		<div className='SimpleBlogPost'>
+			<h6>{post?.title}</h6>
+			<pre>{post?.body}</pre>
+		</div>
+	)
+}
+```
