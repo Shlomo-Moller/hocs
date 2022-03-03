@@ -21,7 +21,7 @@ const SubscribingUsersList = () => {
   }, [])
 
   return (
-    <ul className='SubscribingUsersList'>
+    <ul>
       {users.map(user => (
         <li key={user.id}>{user.name}</li>
       ))}
@@ -39,14 +39,10 @@ const SubscribingBlogPost = ({ postId }) => {
 
   const onChange = useCallback(() => DS.getPost(postId).then(data => setPost(data)))
 
-  useEffect(() => {
-    onChange()
-    DS.addChangeListener(onChange)
-    return () => DS.removeChangeListener(onChange)
-  }, [])
+  useEffect(/* Same effect... */)
 
   return (
-    <div className='SubscribingBlogPost'>
+    <div>
       <h6>{post?.title}</h6>
       <pre>{post?.body}</pre>
     </div>
@@ -63,7 +59,7 @@ But first, let's prepare new simple versions of `UsersList` and `BlogPost`, that
 ```js
 const SimpleUsersList = ({ users }) => {
   return (
-    <ul className='SimpleUsersList'>
+    <ul>
       {users?.map(user => (
         <li key={user.id}>{user.name}</li>
       ))}
@@ -73,7 +69,7 @@ const SimpleUsersList = ({ users }) => {
 
 const SimpleBlogPost = ({ post }) => {
   return (
-    <div className='SimpleBlogPost'>
+    <div>
       <h6>{post?.title}</h6>
       <pre>{post?.body}</pre>
     </div>
