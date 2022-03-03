@@ -15,6 +15,8 @@ const App = () => {
       <button id='change-simulator'>Simulate DS change</button>
       <br />
       This button serves as a raiser of an event that represents a "change" on the data source.
+      <br />
+      To better understand what's going on, inspect the code of the different components and while clicking this button, the console window.
 
       <h2>The Different Versions of Our Components</h2>
       
