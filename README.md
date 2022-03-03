@@ -69,13 +69,13 @@ Our HOC will... :
 ```js
 const withSubscription = (Component, fetcher) => props => {
 
-	const [data, setData] = useState(null)
+  const [data, setData] = useState(null)
 
-	const onChange = useCallback(() => fetcher(DS, props).then(json => setData(json))
+  const onChange = useCallback(() => fetcher(DS, props).then(json => setData(json))
 
-	useEffect(/* Same effect... */)
+  useEffect(/* Same effect... */)
 
-	return <Component data={data} {...props} />
+  return <Component data={data} {...props} />
 }
 ```
 
