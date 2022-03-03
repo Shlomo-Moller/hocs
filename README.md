@@ -5,10 +5,14 @@ React HOCs explained in the functional components way.
 ## Let's Go
 
 * React HOCs are a pattern to abstract and share some logic accross many components.
+* HOCs use containers as part of their implementation.
+* You can think of HOCs as parameterized container component definitions.
 * A React HOC is a pure function that... :
     * Takes a component.
     * Defines some functionality.
-    * Returns a new component based on the given one, but with the additional functionality.
+    * Returns one of the two:
+        * A new component based on the given one, but with the additional functionality, **or**:
+        * Another HOC.
 
 ### Scenario-Based Explanation
 
@@ -161,3 +165,50 @@ export default withSubscription(BlogPost, postFetcher, 'post')
 ```
 
 (Same story - `post` instead of `data` and an additional `'post'` parameter)
+
+## Important Notes
+
+* [**Don’t Mutate the Original Component. Use Composition**](https://reactjs.org/docs/higher-order-components.html#dont-mutate-the-original-component-use-composition).
+* [**Convention: Pass Unrelated Props Through to the Wrapped Component**](https://reactjs.org/docs/higher-order-components.html#convention-pass-unrelated-props-through-to-the-wrapped-component).
+* [**Convention: Maximizing Composability**](https://reactjs.org/docs/higher-order-components.html#convention-maximizing-composability).
+* [**Convention: Wrap the Display Name for Easy Debugging**](https://reactjs.org/docs/higher-order-components.html#convention-wrap-the-display-name-for-easy-debugging).
+* [**Static Methods Must Be Copied Over**](https://reactjs.org/docs/higher-order-components.html#static-methods-must-be-copied-over).
+* [**Refs Aren’t Passed Through**](https://reactjs.org/docs/higher-order-components.html#refs-arent-passed-through).
+That’s because `ref` is not really a prop — like `key`, it’s handled specially by React. If you add a `ref` to an element whose component is the result of a HOC, the `ref` refers to an instance of the **outermost** container component, not the wrapped component.
+The solution for this problem is to use the
+[`React.forwardRef` API](https://reactjs.org/docs/forwarding-refs.html).
+
+### Updating `withSubscription` to Wrap the Display Name
+
+```js
+const getDisplayName = component => component.displayName || component.name || 'Component'
+
+const withSubscription = (Component, fetcher, passedPropName = 'data') => {
+	const WithSubscription = props => {
+    ...
+	}
+
+	WithSubscription.displayName = `WithSubscription(${getDisplayName(Component)})`
+
+	return WithSubscription
+}
+```
+
+### Copying Static Methods
+
+```js
+...
+import hoistNonReactStatic from 'hoist-non-react-statics'
+
+const getDisplayName = ...
+
+const withSubscription = (Component, fetcher, passedPropName = 'data') => {
+	const WithSubscription = props => {
+    ...
+	}
+
+	hoistNonReactStatic(WithSubscription, Component)
+
+	...
+}
+```

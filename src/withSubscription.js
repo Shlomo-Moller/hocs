@@ -1,30 +1,41 @@
 import { useState, useEffect, useCallback } from 'react'
+import hoistNonReactStatic from 'hoist-non-react-statics'
 import DS from './ds'
+
+const getDisplayName = component => component.displayName || component.name || 'Component'
 
 /**
  * @param {(props: { data }) => JSX.Element} Component 
  * @param {(dataSource, props) => Promise<json>} fetcher 
  * @param {string} passedPropName
  */
-const withSubscription = (Component, fetcher, passedPropName = 'data') => props => {
+const withSubscription = (Component, fetcher, passedPropName = 'data') => {
+	const WithSubscription = props => {
 
-	const [data, setData] = useState(null)
-
-	const onChange = useCallback(() => {
-		console.log('Fetching data...')
-		fetcher(DS, props).then(json => {
-			console.log('Got data! Updating state...')
-			setData(json)
+		const [data, setData] = useState(null)
+	
+		const onChange = useCallback(() => {
+			console.log('Fetching data...')
+			fetcher(DS, props).then(json => {
+				console.log('Got data! Updating state...')
+				setData(json)
+			})
 		})
-	})
+	
+		useEffect(() => {
+			onChange()
+			DS.addChangeListener(onChange)
+			return () => DS.removeChangeListener(onChange)
+		}, [])
+	
+		return <Component {...{ [passedPropName]: data }} {...props} />
+	}
 
-	useEffect(() => {
-    onChange()
-		DS.addChangeListener(onChange)
-		return () => DS.removeChangeListener(onChange)
-	}, [])
+	hoistNonReactStatic(WithSubscription, Component)
 
-	return <Component {...{ [passedPropName]: data }} {...props} />
+	WithSubscription.displayName = `WithSubscription(${getDisplayName(Component)})`
+
+	return WithSubscription
 }
 
 export default withSubscription
